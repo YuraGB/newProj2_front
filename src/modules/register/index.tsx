@@ -6,9 +6,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form.tsx";
-import { Input } from "../../components/ui/input.tsx";
-import { Button } from "../../components/ui/button.tsx";
+  FormRootError,
+} from "@/components/ui/form.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import { useRegister } from "./hook/useRegister.ts";
 
 export const Register = (): ReactNode => {
@@ -55,7 +56,7 @@ export const Register = (): ReactNode => {
             </FormItem>
           )}
         />
-
+        <FormRootError />
         <Button type="submit">Submit</Button>
       </form>
     </Form>

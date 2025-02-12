@@ -6,6 +6,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormRootError,
 } from "../../components/ui/form.tsx";
 import { Input } from "../../components/ui/input.tsx";
 import { Button } from "../../components/ui/button.tsx";
@@ -15,7 +16,10 @@ export const Login = (): ReactNode => {
   const { form, onSubmit } = useLogin();
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={`space-y-8 ${form.formState.errors?.root ? "text-destructive" : ""}`}
+      >
         <FormField
           control={form.control}
           name="email"
@@ -42,6 +46,8 @@ export const Login = (): ReactNode => {
             </FormItem>
           )}
         />
+        <FormRootError />
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>

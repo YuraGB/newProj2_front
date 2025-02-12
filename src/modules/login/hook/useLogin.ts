@@ -4,6 +4,10 @@ import { useForm } from "react-hook-form";
 import { useLoginApi } from "@/modules/login/api/useLoginApi.ts";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import {
+  FieldsError,
+  formatErrorMessage,
+} from "@/modules/util/errorFormHandler.ts";
 
 const defaultValues = {
   email: "",
@@ -28,6 +32,15 @@ export const useLogin = () => {
       navigate("/profile");
     }
   }, [userLogged]);
+
+  useEffect(() => {
+    if (errorLogin) {
+      const [name, opts] = formatErrorMessage(errorLogin) as FieldsError<
+        typeof defaultValues
+      >;
+      form.setError(name, opts);
+    }
+  }, [errorLogin]);
 
   return {
     form,

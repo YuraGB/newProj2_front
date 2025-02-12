@@ -7,6 +7,10 @@ import { useForm } from "react-hook-form";
 import { useRegistrationApi } from "@/modules/register/api/useRegistrationApi.ts";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import {
+  FieldsError,
+  formatErrorMessage,
+} from "@/modules/util/errorFormHandler.ts";
 
 const defaultValues = {
   email: "",
@@ -30,10 +34,16 @@ export const useRegister = () => {
     }
   }, [newUserCreated]);
 
+  useEffect(() => {
+    if (errorCreateNewUser) {
+      const [name, opts] = formatErrorMessage(
+        errorCreateNewUser,
+      ) as FieldsError<typeof defaultValues>;
+      form.setError(name, opts);
+    }
+  }, [errorCreateNewUser]);
+
   function onSubmit(values: TRegisterFormValues) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
     createNewUser(values);
   }
 
