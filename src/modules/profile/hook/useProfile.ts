@@ -12,7 +12,6 @@ export const useProfile = () => {
 
   useEffect(() => {
     if (errorProfileData || !currentUser) {
-      console.log(errorProfileData);
       navigate("/");
     }
   }, [errorProfileData]);

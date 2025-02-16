@@ -5,3 +5,8 @@ export type TNewUser = {
 };
 
 export type TUser = Omit<TNewUser, "password"> & { id: number; gender: string };
+
+export type TResponseAuth = {
+  user: TUser;
+  accessToken: string;
+};
