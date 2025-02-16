@@ -12,7 +12,7 @@ import { Input } from "../../components/ui/input.tsx";
 import { Button } from "../../components/ui/button.tsx";
 import { useLogin } from "./hook/useLogin.ts";
 
-export const Login = (): ReactNode => {
+export const LoginForm = (): ReactNode => {
   const { form, onSubmit } = useLogin();
   return (
     <Form {...form}>
@@ -48,7 +48,9 @@ export const Login = (): ReactNode => {
         />
         <FormRootError />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className={"w-full"}>
+          Submit
+        </Button>
       </form>
     </Form>
   );

@@ -3,8 +3,10 @@ import { TLoginFormValues } from "@/modules/login/validation.ts";
 import apiCall from "@/lib/axiosBase.ts";
 import { TUser } from "@/types";
 import { toast } from "sonner";
+import useUserStore from "@/stores/userStore.ts";
 
 export const useLoginApi = () => {
+  const { setCurrentUser } = useUserStore();
   const {
     mutate: loginHandler,
     error: errorLogin,
@@ -20,6 +22,7 @@ export const useLoginApi = () => {
         description: "There has been an error",
       }),
     onSuccess: (data: TUser) => {
+      setCurrentUser(data);
       toast.success("New user created", {
         description: `The User ${data.userName} was successfully created`,
       });

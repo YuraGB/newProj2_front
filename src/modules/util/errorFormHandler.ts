@@ -1,31 +1,44 @@
-import axios from "axios";
-
-// type FieldName = "password" | "userName" | "email";
-
 export type FieldsError<T extends Record<string, any>> = [
   keyof T,
   { message: string; type?: string },
 ];
 
-export const getErrorMessage = (error: unknown) => {
-  if (axios.isAxiosError(error)) {
-    return error.response?.data?.error || "Server error";
+export const getErrorMessage = (error: unknown): string => {
+  // if axios error
+  if (error && typeof error === "object" && "response" in error) {
+    const axiosError = error as { response?: { data?: { error?: string } } };
+    return axiosError.response?.data?.error || "Server error";
   }
-  return error instanceof Error ? error.message : "Unknown error";
+
+  // if Error
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Unknown error";
 };
 
-export const formatErrorMessage = (error: unknown) => {
-  const message: string = getErrorMessage(error);
-  if (message.includes("password")) {
-    return ["password", { message }];
-  }
+// Pattern
+let errorPatterns: Record<string, string> = {
+  password: "password",
+  userName: "name",
+  email: "email",
+};
 
-  if (message.includes("name")) {
-    return ["userName", { message }];
-  }
+export const updateErrorPatterns = (newPatterns: Record<string, string>) => {
+  errorPatterns = { ...errorPatterns, ...newPatterns };
+};
 
-  if (message.includes("email")) {
-    return ["email", { message }];
+export const formatErrorMessage = (error: unknown): FieldsError<any> => {
+  const message = getErrorMessage(error);
+
+  const matchedField = Object.entries(errorPatterns).find(([, pattern]) =>
+    message.toLowerCase().includes(pattern),
+  );
+
+  if (matchedField) {
+    const [field] = matchedField;
+    return [field as keyof any, { message }];
   }
 
   return ["root", { type: "400", message }];

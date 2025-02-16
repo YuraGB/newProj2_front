@@ -1,19 +1,33 @@
 import { Route, Routes } from "react-router";
-import { HomePage } from "@/pages/HomePage";
 import { PageWrapper } from "@/components/pageWrapper";
 import { Protected } from "@/components/protectedRoutes";
-import { Profile } from "@/pages/Profile";
+import { lazy, Suspense } from "react";
+import { AuthPageWrapper } from "@/components/authPageWrapper/AuthPageWrapper.tsx";
+
+const HomePage = lazy(() => import("@/pages/HomePage"));
+const LoginPage = lazy(() => import("@/pages/Login"));
+const RegisterPage = lazy(() => import("@/pages/Registration"));
+const ProfilePage = lazy(() => import("@/pages/Profile"));
 
 function Routing() {
+  // useViewTransition();
   return (
-    <Routes>
-      <Route element={<PageWrapper />}>
-        <Route index path="/" element={<HomePage />} />
-        <Route element={<Protected />}>
-          <Route index path="/profile" element={<Profile />} />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route element={<PageWrapper />}>
+          <Route index path="/" element={<HomePage />} />
+          <Route element={<Protected />}>
+            <Route index path="/profile" element={<ProfilePage />} />
+          </Route>
         </Route>
-      </Route>
-    </Routes>
+        <Route element={<PageWrapper mainClasses={"navigation_animation"} />}>
+          <Route element={<AuthPageWrapper />}>
+            <Route path={"login"} element={<LoginPage />} />
+            <Route path={"registration"} element={<RegisterPage />} />
+          </Route>
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 

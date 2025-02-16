@@ -1,31 +1,30 @@
-import { useQuery } from "@tanstack/react-query";
-import apiClient from "@/lib/axiosBase.ts";
-import { TUser } from "@/types";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import useUserStore from "@/stores/userStore.ts";
+import { useProfileApi } from "@/modules/profile/api/useProfileApi.ts";
 
 export const useProfile = () => {
   const navigate = useNavigate();
-  const {
-    data: profileData,
-    error: errorProfileData,
-    isLoading: loadingProfile,
-  } = useQuery({
-    queryKey: ["profile"],
-    queryFn: async () => {
-      const resp = await apiClient.get<TUser>("/profile");
-      return resp.data;
-    },
-  });
+  const { currentUser, setCurrentUser } = useUserStore();
+  const { profileData, errorProfileData, loadingProfile } = useProfileApi(
+    !Boolean(currentUser?.id),
+  );
 
   useEffect(() => {
-    if (errorProfileData) {
+    if (errorProfileData || !currentUser) {
+      console.log(errorProfileData);
       navigate("/");
     }
   }, [errorProfileData]);
 
+  useEffect(() => {
+    if (profileData?.id) {
+      setCurrentUser(profileData);
+    }
+  }, [profileData]);
+
   return {
-    profileData,
+    currentUser,
     errorProfileData,
     loadingProfile,
   };

@@ -1,12 +1,15 @@
 import { ReactNode } from "react";
 import { useProfile } from "@/modules/profile/hook/useProfile.ts";
+import { PageTitle } from "@/components/pageTitle";
 
 export const ProfileComponent = (): ReactNode => {
-  const { profileData, loadingProfile, errorProfileData } = useProfile();
-  console.log(profileData, loadingProfile, errorProfileData);
+  const { currentUser, loadingProfile } = useProfile();
   return (
-    <article>
-      <h2>{profileData?.userName}</h2>
-    </article>
+    <>
+      <PageTitle title={"Profile"} />
+      <article>
+        <h2>{loadingProfile ? "Loading" : currentUser?.userName}</h2>
+      </article>
+    </>
   );
 };

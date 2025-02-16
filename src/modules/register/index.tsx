@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useRegister } from "./hook/useRegister.ts";
 
-export const Register = (): ReactNode => {
+export const RegisterForm = (): ReactNode => {
   const { form, onSubmit } = useRegister();
   return (
     <Form {...form}>
@@ -57,7 +57,9 @@ export const Register = (): ReactNode => {
           )}
         />
         <FormRootError />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className={"w-full"}>
+          Submit
+        </Button>
       </form>
     </Form>
   );

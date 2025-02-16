@@ -1,18 +1,23 @@
-import { StrictMode } from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import "./index.css";
 import Routing from "./modules/routing/Routing.tsx";
 import { QueryProvider } from "./lib/reactQuery.tsx";
-import { Toaster } from "@/components/ui/sonner.tsx";
+import ErrorBoundary from "@/components/errorWrapper/errorBoundary.tsx";
+const Toaster = lazy(() => import("@/components/ui/sonner.tsx"));
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <QueryProvider>
-        <Routing />
-        <Toaster richColors={true} />
-      </QueryProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <QueryProvider>
+          <Routing />
+          <Suspense fallback={null}>
+            <Toaster richColors={true} />
+          </Suspense>
+        </QueryProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>,
 );

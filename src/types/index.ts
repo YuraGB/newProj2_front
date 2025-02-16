@@ -4,4 +4,4 @@ export type TNewUser = {
   userName: string;
 };
 
-export type TUser = Omit<TNewUser, "password"> & { id: number };
+export type TUser = Omit<TNewUser, "password"> & { id: number; gender: string };

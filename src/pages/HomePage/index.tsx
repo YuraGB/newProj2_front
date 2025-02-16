@@ -1,14 +1,12 @@
 import { ReactNode } from "react";
 import { PageTitle } from "@/components/pageTitle";
-import { Register } from "@/modules/register";
-import { Login } from "@/modules/login";
 
-export const HomePage = (): ReactNode => {
+const HomePage = (): ReactNode => {
   return (
-    <>
-      <PageTitle title={"Login"} />
-      <Login />
-      <Register />
-    </>
+    <article className={"page-enter"}>
+      <PageTitle title={"Home page"} />
+    </article>
   );
 };
+
+export default HomePage;

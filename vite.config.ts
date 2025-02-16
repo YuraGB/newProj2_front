@@ -14,4 +14,8 @@ export default defineConfig({
     outDir: "../static",
     emptyOutDir: true,
   },
+
+  server: {
+    port: 5174,
+  },
 });
