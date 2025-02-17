@@ -13,7 +13,6 @@ import defaultStyles from "@/modules/profileMenu/avatar.module.css";
 
 export const ProfileMenu = (): ReactNode => {
   const { currentUser } = useUserStore();
-
   if (!currentUser) return null;
 
   return (

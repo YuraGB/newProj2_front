@@ -29,8 +29,8 @@ export const useLoginApi = () => {
       setToken(accessToken);
       setCurrentUser(user);
 
-      toast.success("New user created", {
-        description: `The User ${user.userName} was successfully created`,
+      toast.success("User logged in", {
+        description: `The User ${user.userName} was successfully logged in`,
       });
     },
   });
