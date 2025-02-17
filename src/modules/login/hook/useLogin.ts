@@ -8,6 +8,7 @@ import {
   FieldsError,
   formatErrorMessage,
 } from "@/modules/util/errorFormHandler.ts";
+import useUserStore from "@/stores/userStore.ts";
 
 const defaultValues = {
   email: "",
@@ -15,7 +16,8 @@ const defaultValues = {
 };
 
 export const useLogin = () => {
-  const { loginHandler, errorLogin, isLoading, userLogged } = useLoginApi();
+  const { loginHandler, errorLogin, isLoading } = useLoginApi();
+  const { currentUser } = useUserStore();
   const navigate = useNavigate();
 
   const form = useForm<TLoginFormValues>({
@@ -28,10 +30,10 @@ export const useLogin = () => {
   }
 
   useEffect(() => {
-    if (userLogged?.id) {
+    if (currentUser) {
       navigate("/profile");
     }
-  }, [userLogged]);
+  }, [currentUser]);
 
   useEffect(() => {
     if (errorLogin) {

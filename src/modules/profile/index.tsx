@@ -4,6 +4,7 @@ import { PageTitle } from "@/components/pageTitle";
 
 export const ProfileComponent = (): ReactNode => {
   const { currentUser, loadingProfile } = useProfile();
+
   return (
     <>
       <PageTitle title={"Profile"} />

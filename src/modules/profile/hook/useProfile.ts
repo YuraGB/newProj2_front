@@ -2,19 +2,23 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import useUserStore from "@/stores/userStore.ts";
 import { useProfileApi } from "@/modules/profile/api/useProfileApi.ts";
+import { toast } from "sonner";
 
 export const useProfile = () => {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useUserStore();
   const { profileData, errorProfileData, loadingProfile } = useProfileApi(
-    !Boolean(currentUser?.id),
+    Boolean(currentUser?.id),
   );
 
   useEffect(() => {
-    if (errorProfileData || !currentUser) {
+    if (errorProfileData && !currentUser) {
+      toast.error("Access denied", {
+        description: "You can't access to this page",
+      });
       navigate("/");
     }
-  }, [errorProfileData]);
+  }, [errorProfileData, currentUser]);
 
   useEffect(() => {
     if (profileData?.id) {
