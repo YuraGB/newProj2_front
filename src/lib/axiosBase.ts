@@ -61,7 +61,7 @@ instance.interceptors.response.use(
 
           // Clear the queue
           refreshAndRetryQueue.length = 0;
-          console.log(originalRequest);
+
           // Retry the original request
           return instance(originalRequest);
         } catch (refreshError) {

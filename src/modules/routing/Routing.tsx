@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { PageWrapper } from "@/components/pageWrapper";
+import { PageWrapper } from "../pageWrapper";
 import { lazy, Suspense } from "react";
 import { AuthPageWrapper } from "@/components/authPageWrapper/AuthPageWrapper.tsx";
 

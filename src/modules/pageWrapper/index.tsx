@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Outlet } from "react-router";
-import { usePageWrapper } from "@/components/pageWrapper/hook/usePageWrapper.ts";
+import { usePageWrapper } from "@/modules/pageWrapper/hook/usePageWrapper.ts";
 import { Header } from "@/components/header";
 
 type TPageWrapper = {

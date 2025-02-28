@@ -1,6 +1,6 @@
 import useUserStore from "@/stores/userStore.ts";
 import { useEffect } from "react";
-import { usePageWrapperApi } from "@/components/pageWrapper/api/usePageWrapperApi.ts";
+import { usePageWrapperApi } from "@/modules/pageWrapper/api/usePageWrapperApi.ts";
 import useAccessTokenStore from "@/stores/accessTokenStore.ts";
 
 // On any page were Page wrapper is a parent

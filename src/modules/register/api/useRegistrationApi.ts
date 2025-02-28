@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { TNewUser, TResponseAuth } from "@/types";
+import { TNewUser, TResponseAuth } from "@/types/auth";
 import apiCall from "@/lib/axiosBase.ts";
 import { toast } from "sonner";
 import useUserStore from "@/stores/userStore.ts";

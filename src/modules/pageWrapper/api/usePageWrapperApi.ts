@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { TUser } from "@/types";
+import { TUser } from "@/types/auth";
 import apiCall from "@/lib/axiosBase.ts";
 
 export const usePageWrapperApi = () => {

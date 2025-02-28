@@ -29,7 +29,7 @@ export const useRegister = () => {
     useRegistrationApi();
 
   useEffect(() => {
-    if (newUserCreated?.id) {
+    if (newUserCreated?.user?.id) {
       navigate("/profile");
     }
   }, [newUserCreated]);
