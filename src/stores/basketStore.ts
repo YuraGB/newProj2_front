@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import { TProduct } from "@/types/product";
+import { TProductBasket } from "@/types/product";
 
 interface IBasketStore {
-  basket: TProduct[];
-  addToBasket: (item: TProduct) => void;
-  updateBasket: (item: TProduct) => void;
-  removeFromBasket: (item: TProduct) => void;
+  basket: TProductBasket[];
+  addToBasket: (item: TProductBasket) => void;
+  mergeBasket: (serverBasket: TProductBasket[]) => void;
+  updateBasket: (item: TProductBasket) => void;
+  removeFromBasket: (item: TProductBasket) => void;
   clearBasket: () => void;
 }
 
@@ -16,7 +17,32 @@ export const useBasketStore = create<IBasketStore>((set) => ({
       return { ...state, basket: [] };
     });
   },
-  addToBasket: (item: TProduct) => {
+  mergeBasket: (serverBasket) => {
+    set((state) => {
+      const localBasket = state.basket;
+
+      const productMap = new Map();
+
+      localBasket.forEach((item) => {
+        productMap.set(item.id, item);
+      });
+
+      serverBasket.forEach((item) => {
+        if (productMap.has(item.id)) {
+          const existingItem = productMap.get(item.id);
+          productMap.set(item.id, {
+            ...existingItem,
+            quantity: existingItem.quantity + item.quantity,
+          });
+        } else {
+          productMap.set(item.id, item);
+        }
+      });
+
+      return { basket: Array.from(productMap.values()) };
+    });
+  },
+  addToBasket: (item: TProductBasket) => {
     set((state) => {
       return {
         ...state,
@@ -24,7 +50,7 @@ export const useBasketStore = create<IBasketStore>((set) => ({
       };
     });
   },
-  updateBasket: (item: TProduct) => {
+  updateBasket: (item: TProductBasket) => {
     set((state) => {
       return {
         ...state,
@@ -40,7 +66,7 @@ export const useBasketStore = create<IBasketStore>((set) => ({
       };
     });
   },
-  removeFromBasket: (item: TProduct) => {
+  removeFromBasket: (item: TProductBasket) => {
     set((state) => {
       return {
         ...state,

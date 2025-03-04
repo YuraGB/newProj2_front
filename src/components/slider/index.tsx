@@ -20,8 +20,8 @@ export const Slider = ({ children }: { children: ReactNode }): ReactNode => {
         waitForTransition: true,
       }}
       speed={1000}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
+      // onSlideChange={() => console.log("slide change")}
+      // onSwiper={(swiper) => console.log(swiper)}
     >
       {children}
     </Swiper>
