@@ -38,7 +38,10 @@ export type TProduct = {
   thumbnail: string;
 };
 
-export type TProductBasket = TProduct & { quantity: number };
+export type TProductBasket = {
+  quantity: number;
+  productId: number;
+};
 
 export type THPProductsSlider = Pick<
   TProduct,

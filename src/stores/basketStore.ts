@@ -1,77 +1,106 @@
 import { create } from "zustand";
-import { TProductBasket } from "@/types/product";
+import { TProduct, TProductBasket } from "@/types/product";
+import { persist } from "zustand/middleware";
 
 interface IBasketStore {
   basket: TProductBasket[];
+  basketProducts: Array<TProduct & { quantity: number }>;
   addToBasket: (item: TProductBasket) => void;
   mergeBasket: (serverBasket: TProductBasket[]) => void;
+  setProductsToBasket: (products: TProduct[]) => void;
   updateBasket: (item: TProductBasket) => void;
   removeFromBasket: (item: TProductBasket) => void;
   clearBasket: () => void;
 }
 
-export const useBasketStore = create<IBasketStore>((set) => ({
-  basket: [],
-  clearBasket: () => {
-    set((state) => {
-      return { ...state, basket: [] };
-    });
-  },
-  mergeBasket: (serverBasket) => {
-    set((state) => {
-      const localBasket = state.basket;
+export const useBasketStore = create<IBasketStore>()(
+  persist(
+    (set, get) => ({
+      basket: [],
+      basketProducts: [],
+      setProductsToBasket: (products: TProduct[]) => {
+        set((state) => {
+          const basket = get().basket;
+          const prodMap = new Map<number, number>();
 
-      const productMap = new Map();
+          basket.forEach((item) => prodMap.set(item.productId, item.quantity));
 
-      localBasket.forEach((item) => {
-        productMap.set(item.id, item);
-      });
+          return {
+            ...state,
+            basketProducts: products.map((product) => ({
+              ...product,
+              quantity: prodMap.get(product.id) ?? 1,
+            })),
+          };
+        });
+      },
+      clearBasket: () => {
+        set((state) => {
+          return { ...state, basket: [] };
+        });
+      },
+      mergeBasket: (serverBasket) => {
+        const state = useBasketStore.getState(); // Отримуємо поточний стан без ререндеру
 
-      serverBasket.forEach((item) => {
-        if (productMap.has(item.id)) {
-          const existingItem = productMap.get(item.id);
-          productMap.set(item.id, {
-            ...existingItem,
-            quantity: existingItem.quantity + item.quantity,
-          });
-        } else {
-          productMap.set(item.id, item);
-        }
-      });
-
-      return { basket: Array.from(productMap.values()) };
-    });
-  },
-  addToBasket: (item: TProductBasket) => {
-    set((state) => {
-      return {
-        ...state,
-        basket: [...state.basket, item],
-      };
-    });
-  },
-  updateBasket: (item: TProductBasket) => {
-    set((state) => {
-      return {
-        ...state,
-        basket: state.basket.map((i) => {
-          if (i.id === item.id) {
-            return {
-              ...i,
-              ...item,
-            };
+        const productMap = new Map();
+        state.basket.forEach((item) => productMap.set(item.productId, item));
+        serverBasket.forEach((item) => {
+          if (productMap.has(item.productId)) {
+            productMap.get(item.productId).quantity = item.quantity;
+          } else {
+            productMap.set(item.productId, item);
           }
-          return i;
-        }),
-      };
-    });
-  },
-  removeFromBasket: (item: TProductBasket) => {
-    set((state) => {
-      return {
-        ...state,
-        basket: state.basket.filter((i) => i.id !== item.id),
-      };
-    });
-  },
-}));
+        });
+
+        const newBasket = Array.from(productMap.values());
+
+        // Якщо кошик не змінився – не оновлюємо стан
+        if (JSON.stringify(state.basket) === JSON.stringify(newBasket)) {
+          return;
+        }
+
+        set({
+          ...state,
+          basket: newBasket,
+        });
+      },
+
+      addToBasket: (item: TProductBasket) => {
+        set((state) => {
+          return {
+            ...state,
+            basket: [...state.basket, item],
+          };
+        });
+      },
+      updateBasket: (item: TProductBasket) => {
+        set((state) => {
+          return {
+            ...state,
+            basket: state.basket.map((i) => {
+              if (i.productId === item.productId) {
+                return {
+                  ...i,
+                  ...item,
+                };
+              }
+              return i;
+            }),
+          };
+        });
+      },
+      removeFromBasket: (item: TProductBasket) => {
+        set((state) => {
+          return {
+            ...state,
+            basket: state.basket.filter((i) => i.productId !== item.productId),
+          };
+        });
+      },
+    }),
+    {
+      name: "basket",
+      // getStorage: () => localStorage,
+    },
+  ),
+);

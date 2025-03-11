@@ -2,7 +2,7 @@ import { TProductBasket } from "@/types/product";
 
 export const findProductInBasket = (
   basket: TProductBasket[],
-  itemId: TProductBasket["id"],
+  itemId: TProductBasket["productId"],
 ): TProductBasket | undefined => {
-  return basket.find(({ id }) => id === itemId);
+  return basket.find(({ productId }) => productId === itemId);
 };

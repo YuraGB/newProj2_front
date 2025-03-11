@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 export const useLogout = () => {
   const { loggedOut, errorLoggedOut, isLoading, loginOutAction } =
     useLogoutApi();
-  const { removeCurrentUser } = useUserStore();
+  const removeCurrentUser = useUserStore((state) => state.removeCurrentUser);
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -6,7 +6,7 @@ import { Navigate, Outlet } from "react-router";
 // The user should log out first
 // Otherwise the user should be redirected to the /profile page
 export const AuthPageWrapper = (): ReactNode => {
-  const { currentUser } = useUserStore();
+  const currentUser = useUserStore((state) => state.currentUser);
 
   if (currentUser) {
     return <Navigate to={"/profile"} />;

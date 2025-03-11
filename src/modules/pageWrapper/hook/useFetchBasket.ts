@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import { useBasketStore } from "@/stores/basketStore.ts";
 
 export const useFetchBasket = () => {
-  const { currentUser } = useUserStore();
-  const { mergeBasket } = useBasketStore();
+  const currentUser = useUserStore((state) => state.currentUser);
+  const mergeBasket = useBasketStore((state) => state.mergeBasket);
 
   const {
     data: basketData,
@@ -17,7 +17,7 @@ export const useFetchBasket = () => {
     queryKey: ["basket", currentUser?.id],
     queryFn: async () => {
       const { data } = await apiCall.get<{ basket: TProductBasket[] }>(
-        `/basket/${currentUser?.id}`,
+        `/basket`,
       );
       return data;
     },

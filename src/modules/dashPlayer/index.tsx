@@ -20,7 +20,15 @@ const DashPlayer = ({ src }: { src: string }) => {
     }
   }, [src]);
 
-  return <video ref={videoRef} controls />;
+  return (
+    <video
+      ref={videoRef}
+      controls={false}
+      loop={true}
+      className={"w-full"}
+      muted={true}
+    />
+  );
 };
 
 export default DashPlayer;

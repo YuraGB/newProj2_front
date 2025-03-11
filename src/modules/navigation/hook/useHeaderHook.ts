@@ -1,7 +1,8 @@
 import useUserStore from "@/stores/userStore.ts";
 
 export const useHeaderHook = () => {
-  const { currentUser } = useUserStore();
+  const currentUser = useUserStore((state) => state.currentUser);
+
   const notLoggedInNav = [
     {
       navKey: "/login",

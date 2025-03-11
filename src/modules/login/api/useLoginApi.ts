@@ -7,8 +7,8 @@ import useUserStore from "@/stores/userStore.ts";
 import useAccessTokenStore from "@/stores/accessTokenStore.ts";
 
 export const useLoginApi = () => {
-  const { setCurrentUser } = useUserStore();
-  const { setToken } = useAccessTokenStore();
+  const setCurrentUser = useUserStore((state) => state.setCurrentUser);
+  const setToken = useAccessTokenStore((state) => state.setToken);
   const {
     mutate: loginHandler,
     error: errorLogin,

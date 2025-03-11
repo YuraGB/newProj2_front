@@ -10,6 +10,7 @@ import { useFetchBasket } from "@/modules/pageWrapper/hook/useFetchBasket.ts";
 // and to fetch the current user's basket
 export const usePageWrapper = () => {
   const { setCurrentUser } = useUserStore();
+
   const { setToken } = useAccessTokenStore();
   const { userData } = usePageWrapperApi();
 

@@ -17,7 +17,7 @@ const defaultValues = {
 
 export const useLogin = () => {
   const { loginHandler, errorLogin, isLoading } = useLoginApi();
-  const { currentUser } = useUserStore();
+  const currentUser = useUserStore((state) => state.currentUser);
   const navigate = useNavigate();
 
   const form = useForm<TLoginFormValues>({

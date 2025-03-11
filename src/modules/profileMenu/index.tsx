@@ -12,7 +12,7 @@ import { EditUserInfo } from "@/modules/editUserInfo";
 import defaultStyles from "@/modules/profileMenu/avatar.module.css";
 
 export const ProfileMenu = (): ReactNode => {
-  const { currentUser } = useUserStore();
+  const currentUser = useUserStore((state) => state.currentUser);
   if (!currentUser) return null;
 
   return (
