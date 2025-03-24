@@ -3,14 +3,14 @@ import { useBasketStore } from "@/stores/basketStore.ts";
 import { useGetMiniCartProductsApi } from "@/modules/basket/api/useGetMinicartProductsApi.ts";
 
 export const useMiniCart = () => {
-  const { loadingBasketCounter, errorBasketCounter } = useMiniCartCounterApi(); // Counter for the mini cart
+  const { isLoading, errorBasketCounter } = useMiniCartCounterApi(); // Counter for the mini cart
   const { loadingMiniCartProducts, miniCartProducts, errorProductsMiniCart } =
     useGetMiniCartProductsApi();
 
   const basket = useBasketStore((st) => st.basket);
 
   return {
-    loadingBasketCounter,
+    isLoading,
     errorBasketCounter,
     loadingMiniCartProducts,
     errorProductsMiniCart,

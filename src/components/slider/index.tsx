@@ -8,8 +8,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 export const Slider = ({ children }: { children: ReactNode }): ReactNode => {
   return (
     <Swiper
-      spaceBetween={15}
-      slidesPerView={5}
+      spaceBetween={1}
       className={"px-2"}
       loop={true}
       navigation={true}
@@ -20,8 +19,20 @@ export const Slider = ({ children }: { children: ReactNode }): ReactNode => {
         waitForTransition: true,
       }}
       speed={1000}
-      // onSlideChange={() => console.log("slide change")}
-      // onSwiper={(swiper) => console.log(swiper)}
+      breakpoints={{
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 10,
+        },
+        1220: {
+          slidesPerView: 4,
+          spaceBetween: 50,
+        },
+      }}
     >
       {children}
     </Swiper>

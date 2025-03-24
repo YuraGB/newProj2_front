@@ -16,12 +16,15 @@ export const Slide: FC<{ product: THPProductsSlider }> = ({
       <img
         title={title}
         loading={"eager"}
+        className={"m-auto"}
+        width={255}
+        height={255}
         src={thumbnail}
         alt={`image of ${title}`}
       />
       <section className={"p-2 mb-2 flex justify-between"}>
-        <h2>{title}</h2>
-        <span>{`$${price}`}</span>
+        <h2 className={"min-h-[3rem] pl-2 text-gray-400"}>{title}</h2>
+        <span className={"font-bold"}>{`$${price}`}</span>
       </section>
     </section>
   );

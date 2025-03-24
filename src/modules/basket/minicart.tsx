@@ -13,10 +13,9 @@ const MiniCartProducts = lazy(
 );
 
 const MiniCart = (): ReactNode => {
-  const { loadingBasketCounter, errorBasketCounter, basketCounter } =
-    useMiniCart();
+  const { isLoading, errorBasketCounter, basketCounter } = useMiniCart();
 
-  if (loadingBasketCounter) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading...</p>;
   if (errorBasketCounter) return <p>Error</p>;
 
   return (

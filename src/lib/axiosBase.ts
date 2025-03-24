@@ -1,5 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 import useAccessTokenStore from "@/stores/accessTokenStore.ts";
+import { useBasketStore } from "@/stores/basketStore";
+import useUserStore from "@/stores/userStore.ts";
+
 interface RetryQueueItem {
   resolve: (value?: any) => void;
   reject: (error?: any) => void;
@@ -65,8 +68,12 @@ instance.interceptors.response.use(
           // Retry the original request
           return instance(originalRequest);
         } catch (refreshError) {
+          // clear basket from local storage
+          useBasketStore.getState().clearBasket();
+          //remove user from store
+          useUserStore.getState().removeCurrentUser();
+
           // Handle token refresh error
-          // You can clear all storage and redirect the user to the login page
           throw refreshError;
         } finally {
           isRefreshing = false;

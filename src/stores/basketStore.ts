@@ -36,7 +36,7 @@ export const useBasketStore = create<IBasketStore>()(
       },
       clearBasket: () => {
         set((state) => {
-          return { ...state, basket: [] };
+          return { ...state, basket: [], basketProducts: [] };
         });
       },
       mergeBasket: (serverBasket) => {
