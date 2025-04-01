@@ -27,7 +27,11 @@ export const LoginForm = (): ReactNode => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="E-mail" {...field} />
+                <Input
+                  placeholder="E-mail"
+                  {...field}
+                  autoComplete={"username"}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -40,7 +44,12 @@ export const LoginForm = (): ReactNode => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Password" type={"password"} {...field} />
+                <Input
+                  placeholder="Password"
+                  type={"password"}
+                  {...field}
+                  autoComplete={"current-password"}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -11,6 +11,7 @@ export const Slider = ({ children }: { children: ReactNode }): ReactNode => {
       spaceBetween={1}
       className={"px-2"}
       loop={true}
+      injectStyles={[]}
       navigation={true}
       modules={[Autoplay, Pagination, Navigation]}
       autoplay={{

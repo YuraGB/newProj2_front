@@ -8,6 +8,7 @@ const LoginPage = lazy(() => import("@/pages/Login"));
 const RegisterPage = lazy(() => import("@/pages/Registration"));
 const ProfilePage = lazy(() => import("@/pages/Profile"));
 const ProductPage = lazy(() => import("@/pages/Product"));
+const Checkout = lazy(() => import("@/pages/Checkout"));
 
 function Routing() {
   return (
@@ -17,6 +18,7 @@ function Routing() {
           <Route index path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path={"/products/:id"} element={<ProductPage />} />
+          <Route path={"/checkout"} element={<Checkout />} />
         </Route>
         <Route element={<PageWrapper mainClasses={"navigation_animation"} />}>
           <Route element={<AuthPageWrapper />}>

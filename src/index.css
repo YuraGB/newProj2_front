@@ -65,7 +65,7 @@
 
   body, #root {
     width: 100%;
-    height: 100dvh;
+    min-height: 100dvh;
   }
 
   html {
@@ -78,9 +78,6 @@
   input, select, textarea {
     field-sizing: content;
   }
-
-
-
 }
 
 

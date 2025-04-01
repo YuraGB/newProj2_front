@@ -18,6 +18,7 @@ export const useBasketStore = create<IBasketStore>()(
     (set, get) => ({
       basket: [],
       basketProducts: [],
+
       setProductsToBasket: (products: TProduct[]) => {
         set((state) => {
           const basket = get().basket;
@@ -34,19 +35,23 @@ export const useBasketStore = create<IBasketStore>()(
           };
         });
       },
-      clearBasket: () => {
-        set((state) => {
-          return { ...state, basket: [], basketProducts: [] };
-        });
-      },
-      mergeBasket: (serverBasket) => {
-        const state = useBasketStore.getState(); // Отримуємо поточний стан без ререндеру
 
-        const productMap = new Map();
+      clearBasket: () => {
+        set(() => ({
+          basket: [],
+          basketProducts: [],
+        }));
+      },
+
+      mergeBasket: (serverBasket) => {
+        const state = get();
+        const productMap = new Map<number, TProductBasket>();
+
         state.basket.forEach((item) => productMap.set(item.productId, item));
+
         serverBasket.forEach((item) => {
           if (productMap.has(item.productId)) {
-            productMap.get(item.productId).quantity = item.quantity;
+            productMap.get(item.productId)!.quantity = item.quantity;
           } else {
             productMap.set(item.productId, item);
           }
@@ -54,53 +59,64 @@ export const useBasketStore = create<IBasketStore>()(
 
         const newBasket = Array.from(productMap.values());
 
-        // Якщо кошик не змінився – не оновлюємо стан
-        if (JSON.stringify(state.basket) === JSON.stringify(newBasket)) {
-          return;
+        if (JSON.stringify(state.basket) !== JSON.stringify(newBasket)) {
+          set({ basket: newBasket });
         }
-
-        set({
-          ...state,
-          basket: newBasket,
-        });
       },
 
       addToBasket: (item: TProductBasket) => {
         set((state) => {
+          const existingItem = state.basket.find(
+            (i) => i.productId === item.productId,
+          );
+
+          if (existingItem) {
+            return {
+              basket: state.basket.map((i) =>
+                i.productId === item.productId
+                  ? { ...i, quantity: i.quantity + item.quantity }
+                  : i,
+              ),
+            };
+          }
+
           return {
-            ...state,
             basket: [...state.basket, item],
           };
         });
       },
+
       updateBasket: (item: TProductBasket) => {
         set((state) => {
           return {
-            ...state,
-            basket: state.basket.map((i) => {
-              if (i.productId === item.productId) {
-                return {
-                  ...i,
-                  ...item,
-                };
-              }
-              return i;
-            }),
+            basket: updatedBasketProducts(state.basket, item),
+            basketProducts: state.basketProducts.map((p) =>
+              p.id === item.productId ? { ...p, quantity: item.quantity } : p,
+            ),
           };
         });
       },
+
       removeFromBasket: (item: TProductBasket) => {
-        set((state) => {
-          return {
-            ...state,
-            basket: state.basket.filter((i) => i.productId !== item.productId),
-          };
-        });
+        set((state) => ({
+          basket: state.basket.filter((i) => i.productId !== item.productId),
+        }));
       },
     }),
     {
       name: "basket",
-      // getStorage: () => localStorage,
     },
   ),
 );
+
+const updatedBasketProducts = <T extends { id?: number; productId?: number }>(
+  products: T[],
+  item: T,
+): T[] =>
+  products.map((i) => {
+    const isMatch =
+      (i.id !== undefined && i.id === item.id) ||
+      (i.productId !== undefined && i.productId === item.productId);
+
+    return isMatch ? { ...i, ...item } : i;
+  });
