@@ -23,8 +23,6 @@ export const useUpdateQuantityApi = () => {
       return updatedProduct.data;
     },
     onSuccess: async (product: TProductBasket) => {
-      toast.success("Quantity of the added product updated");
-
       // update to the store
       updateBasket(product);
 

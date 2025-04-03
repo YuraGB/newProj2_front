@@ -4,8 +4,8 @@ import useAccessTokenStore from "@/stores/accessTokenStore.ts";
 import { useBasketStore } from "@/stores/basketStore.ts";
 
 export const useLogoutApi = () => {
-  const { clearToken } = useAccessTokenStore();
-  const { clearBasket } = useBasketStore();
+  const clearToken = useAccessTokenStore((state) => state.clearToken);
+  const clearBasket = useBasketStore((state) => state.clearBasket);
   const {
     mutate: loginOutAction,
     data: loggedOut,

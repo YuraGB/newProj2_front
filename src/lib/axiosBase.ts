@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import useAccessTokenStore from "@/stores/accessTokenStore.ts";
 import { useBasketStore } from "@/stores/basketStore";
 import useUserStore from "@/stores/userStore.ts";
+import { useCheckoutMultiStep } from "@/stores/checkoutMultiStepStore.ts";
 
 interface RetryQueueItem {
   resolve: (value?: any) => void;
@@ -40,6 +41,8 @@ instance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest: AxiosRequestConfig = error.config;
+
+    // if access token is expired but refresh token is still valid
     if (
       error.response &&
       error.response.status === 401 &&
@@ -84,6 +87,16 @@ instance.interceptors.response.use(
       return new Promise<void>((resolve, reject) => {
         refreshAndRetryQueue.push({ config: originalRequest, resolve, reject });
       });
+    }
+
+    // if access token is expired and refresh token is also expired
+    if (error.response?.status === 401 && !error.response.data?.canRefresh) {
+      // clear basket from local storage
+      useBasketStore.getState().clearBasket();
+      //remove user from store
+      useUserStore.getState().removeCurrentUser();
+      // clear checkout data
+      useCheckoutMultiStep.getState().clearCheckout();
     }
 
     // Return a Promise rejection if the status code is not 401

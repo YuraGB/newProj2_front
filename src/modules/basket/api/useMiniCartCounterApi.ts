@@ -29,11 +29,13 @@ export const useMiniCartCounterApi = () => {
 
   useEffect(() => {
     if (basketCounter && basketCounter?.basket.length !== 0) {
-      mergeLocalBasket(basketCounter.basket);
-
-      // if there were added products before login
+      // if products were added  before login
       // update users basket on the server
-      mergeShoppingCart(localBasket);
+      if (localBasket?.length > 0) {
+        mergeShoppingCart(localBasket);
+      }
+
+      mergeLocalBasket(basketCounter.basket);
     }
   }, [basketCounter]);
 

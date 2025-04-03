@@ -1,7 +1,19 @@
+import { lazy, Suspense } from "react";
+
 import { UserInfo } from "@/modules/checkout_multiform/components/user/UserInfo.tsx";
-import { AddressInfo } from "@/modules/checkout_multiform/components/address/AddressInfo.tsx";
 import { StepProgressBar } from "@/modules/checkout_multiform/components/StepProgressBar.tsx";
 import { ProductList } from "@/modules/checkout_multiform/components/products/ProductList.tsx";
+
+const PaymentMethods = lazy(
+  () => import("@/modules/checkout_multiform/components/paymentMethods"),
+);
+const AddressInfo = lazy(
+  () =>
+    import("@/modules/checkout_multiform/components/address/AddressInfo.tsx"),
+);
+const SubmitOrder = lazy(
+  () => import("@/modules/checkout_multiform/components/submitOrder"),
+);
 
 export const Checkout_multiform = () => {
   return (
@@ -12,7 +24,11 @@ export const Checkout_multiform = () => {
       <article className="pt-8 col-span-3 max-w-[700px] w-full mx-auto">
         <StepProgressBar />
         <UserInfo />
-        <AddressInfo />
+        <Suspense fallback={<div>Loading...</div>}>
+          <AddressInfo />
+          <PaymentMethods />
+          <SubmitOrder />
+        </Suspense>
       </article>
     </section>
   );

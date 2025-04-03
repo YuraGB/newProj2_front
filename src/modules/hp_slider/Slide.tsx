@@ -1,6 +1,7 @@
 import { THPProductsSlider } from "@/types/product";
 import { FC, ReactNode } from "react";
 import { useNavigate } from "react-router";
+import CustomImage from "@/components/image";
 
 export const Slide: FC<{ product: THPProductsSlider }> = ({
   product,
@@ -13,7 +14,7 @@ export const Slide: FC<{ product: THPProductsSlider }> = ({
       className={"shadow-md flex flex-col m-4 cursor-pointer"}
       onClick={() => navigate(`/products/${id}`)}
     >
-      <img
+      <CustomImage
         title={title}
         loading={"eager"}
         className={"m-auto"}

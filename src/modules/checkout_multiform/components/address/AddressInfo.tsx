@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { ReactNode } from "react";
 import { AddressInfoSummary } from "@/modules/checkout_multiform/components/address/AddressInfoSummary.tsx";
 
-export const AddressInfo = (): ReactNode => {
+const AddressInfo = (): ReactNode => {
   const { formAddressInfo, onSubmitAddress, checkoutAddress, currentStep } =
     useCheckoutAddress();
 
@@ -87,3 +87,5 @@ export const AddressInfo = (): ReactNode => {
     </Form>
   );
 };
+
+export default AddressInfo;

@@ -5,6 +5,11 @@ export const useHeaderHook = () => {
 
   const notLoggedInNav = [
     {
+      navKey: "/",
+      navTitle: "Home",
+      component: () => import(`@/pages/HomePage`),
+    },
+    {
       navKey: "/login",
       navTitle: "Login in",
       component: () => import(`@/pages/Login`),
@@ -17,6 +22,11 @@ export const useHeaderHook = () => {
   ];
 
   const loggedInNav = [
+    {
+      navKey: "/",
+      navTitle: "Home",
+      component: () => import(`@/pages/HomePage`),
+    },
     {
       navKey: "/Profile",
       navTitle: "Profile",

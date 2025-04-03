@@ -24,8 +24,6 @@ export const useAddToCardApi = () => {
       return savedProduct.data;
     },
     onSuccess: async (product: TProductBasket) => {
-      toast.success("Product added to cart");
-
       // add to the store
       addToBasket(product);
 

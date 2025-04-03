@@ -9,13 +9,14 @@ export const AddToCardButton: FC<{
   variant?: keyof VariantProps<typeof buttonVariants>["variant"];
   additionalClasses?: string;
 }> = ({ additionalClasses, variant, product }): ReactNode => {
-  const { addToCardAction } = useAddToCard();
+  const { addToCardAction, isLoading } = useAddToCard();
 
   return (
     <Button
       onClick={() => addToCardAction({ productId: product.id, quantity: 1 })}
       variant={variant ?? "default"}
       className={`cursor-pointer ${additionalClasses ?? ""}`}
+      disabled={isLoading}
     >
       Buy
     </Button>
