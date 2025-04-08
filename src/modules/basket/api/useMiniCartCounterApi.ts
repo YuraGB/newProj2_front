@@ -37,7 +37,7 @@ export const useMiniCartCounterApi = () => {
 
       mergeLocalBasket(basketCounter.basket);
     }
-  }, [basketCounter]);
+  }, [basketCounter, localBasket, mergeLocalBasket, mergeShoppingCart]);
 
   return {
     basketCounter,

@@ -7,7 +7,7 @@ export const ProductPrice: FC<{
 }> = ({ price, additionalClasses }): ReactNode => {
   return (
     <span className={`text-primary ${additionalClasses ?? ""} bold`}>
-      {`$${price}`}
+      {`Price: $${price}`}
     </span>
   );
 };

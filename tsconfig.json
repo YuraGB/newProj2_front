@@ -6,6 +6,7 @@
   ],
   "compilerOptions": {
     "baseUrl": "./src",
+    "types": ["bun-types", "@testing-library/jest-dom"],
     "paths": {
       "@/*": ["*"]
     }

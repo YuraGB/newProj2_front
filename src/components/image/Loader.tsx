@@ -6,7 +6,7 @@ export const Loader: React.FC = () => {
       preserveAspectRatio="xMidYMid"
       style={{
         width: "100%",
-        height: "100%",
+        height: "auto",
         maxWidth: "300px",
         margin: "auto",
       }}

@@ -1,50 +1,41 @@
 import { useEffect, useState } from "react";
 import { convertImageToBase64 } from "@/lib/imgToBase64.ts";
+import { get, set, del } from "idb-keyval";
 
 export const useCustomImage = (src: string | undefined) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [imageSrc, setImageSrc] = useState<string>(src || "");
 
-  // optimisation
-  // saving image in local storage for the first load
-  // then using the local storage image
-  useEffect(() => {
-    if (!src) return;
-    const cachedImage = localStorage.getItem(src);
-    if (cachedImage) {
-      setImageSrc(cachedImage);
+  const loadImage = async (url: string) => {
+    try {
+      const cachedImage = await get(url);
+      if (cachedImage) {
+        setImageSrc(cachedImage);
+        setLoading(false);
+      } else {
+        const base64String = await convertImageToBase64(url);
+        setImageSrc(base64String);
+        setLoading(false);
+        await set(url, base64String);
+      }
+    } catch (error) {
+      console.error("Error loading image", error);
       setLoading(false);
-    } else {
-      convertImageToBase64(src)
-        .then((base64String) => {
-          setImageSrc(base64String);
-          setLoading(false);
-          localStorage.setItem(src, base64String);
-        })
-        .catch((error) => {
-          console.error("Error loading image", error);
-          setLoading(false);
-        });
     }
+  };
+
+  // optimisation
+  // saving image in indexDB storage for the first load
+  // then using the indexDB storage image
+  useEffect(() => {
+    if (src) loadImage(src);
   }, [src]);
 
   // if src changes, we need to load the new image
-  const onErrorHandler = () => {
-    setLoading(true);
+  const onErrorHandler = async () => {
     if (src) {
-      localStorage.removeItem(src);
-      convertImageToBase64(src)
-        .then((base64String) => {
-          setImageSrc(base64String);
-          setLoading(false);
-          localStorage.setItem(src, base64String);
-        })
-        .catch((error) => {
-          console.error("Error loading image", error);
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
+      await del(src);
+      await loadImage(src);
     }
   };
 

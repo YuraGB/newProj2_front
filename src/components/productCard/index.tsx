@@ -13,20 +13,26 @@ export const ProductCard: FC<{
       to={`/products/${id}`}
       loadComponent={() => import(`@/pages/Product`)}
     >
-      <section className={"shadow-md flex flex-col m-4 cursor-pointer"}>
+      <section
+        className={
+          "shadow-md flex flex-col md:m-4 cursor-pointer break-inside-avoid"
+        }
+      >
         <CustomImage
           title={title}
           loading={"lazy"}
           src={thumbnail}
           alt={`image of ${title}`}
         />
-        <p className={"p-2"}>
+        <p className={"p-2 text-primary"}>
           {quantity === 1 ? "Item: 1" : `Items: ${quantity}`}
         </p>
         <footer className={"p-2 mb-2 flex justify-between"}>
-          <h2>{title}</h2>
+          <h2 className={"font-bold text-primary h-[48px] overflow-hidden"}>
+            {title}
+          </h2>
 
-          <span>{`$${price}`}</span>
+          <span className={"text-primary"}>{`$${price}`}</span>
         </footer>
       </section>
     </PrefetchNavLink>

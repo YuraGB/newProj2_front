@@ -1,11 +1,12 @@
 import { OrderSuccess } from "@/modules/orderSuccess";
+import { PageTitle } from "@/components/pageTitle";
 
 const OrderSuccessPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold mb-4">Order Success</h1>
+    <div className="flex flex-col items-center justify-center">
+      <PageTitle title={"Order Success"} />
       <p className="text-lg">Thank you for your order!</p>
-      <p className="text-lg">Your order has been placed successfully.</p>
+      <p className="text-lg mb-4">Your order has been placed successfully.</p>
       <OrderSuccess />
     </div>
   );

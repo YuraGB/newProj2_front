@@ -5,6 +5,8 @@ import {
   userInfoFormSchema,
 } from "@/modules/checkout_multiform/hooks/validations.ts";
 import { useCheckoutMultiStep } from "@/stores/checkoutMultiStepStore.ts";
+import useUserStore from "@/stores/userStore.ts";
+import { useEffect } from "react";
 
 const defaultValues = {
   email: "",
@@ -17,6 +19,19 @@ export const useCheckoutUserInfo = () => {
   const setCheckoutState = useCheckoutMultiStep((state) => state.setUser);
   const setStep = useCheckoutMultiStep((state) => state.setStep);
   const currentStep = useCheckoutMultiStep((state) => state.step);
+  const currentUser = useUserStore((state) => state.currentUser);
+
+  useEffect(() => {
+    if (currentUser) {
+      setCheckoutState({
+        email: currentUser.email,
+        lastname: "registrated_user",
+        username: currentUser.userName,
+        completed: true,
+      });
+      setStep(2);
+    }
+  }, [currentUser, setCheckoutState, setStep]);
 
   const formUserInfo = useForm<TUserFormValues>({
     resolver: zodResolver(userInfoFormSchema),

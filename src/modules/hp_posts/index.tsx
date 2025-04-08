@@ -6,10 +6,22 @@ export const Posts = () => {
   if (!posts || error) return null;
 
   // todo skeleton
-  if (isLoading) return null;
+  if (isLoading) {
+    return (
+      <article
+        className={
+          "hidden md:block md:columns-2 md:gap-2 lg:columns-3 lg:gap-4 mb-4 min-h-[887px]"
+        }
+      />
+    );
+  }
 
   return (
-    <article className={"columns-3 my-2 gap-2"}>
+    <article
+      className={
+        "hidden md:block md:columns-2 md:gap-2 lg:columns-3 lg:gap-4 mb-4"
+      }
+    >
       {posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}

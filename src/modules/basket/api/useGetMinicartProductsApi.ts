@@ -42,7 +42,7 @@ export const useGetMiniCartProductsApi = () => {
     if (miniCartProducts && miniCartProducts?.products.length > 0) {
       setProductsToBasket(miniCartProducts.products);
     }
-  }, [miniCartProducts]);
+  }, [miniCartProducts, setProductsToBasket]);
 
   return { miniCartProducts, loadingMiniCartProducts, errorProductsMiniCart };
 };

@@ -1,26 +1,28 @@
 import { Swiper } from "swiper/react";
 
-// @ts-ignore
+// @ts-expect-error the IDE doesn't see the import
 import "swiper/css";
 import { ReactNode } from "react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
+// todo props set defaults to the slider options
 export const Slider = ({ children }: { children: ReactNode }): ReactNode => {
   return (
     <Swiper
-      spaceBetween={1}
-      className={"px-2"}
+      spaceBetween={20}
       loop={true}
-      injectStyles={[]}
       navigation={true}
       modules={[Autoplay, Pagination, Navigation]}
       autoplay={{
         delay: 2500,
-        disableOnInteraction: false,
-        waitForTransition: true,
+        disableOnInteraction: true,
       }}
       speed={1000}
       breakpoints={{
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 10,
+        },
         640: {
           slidesPerView: 2,
           spaceBetween: 20,

@@ -16,7 +16,7 @@ export const useLogout = () => {
         navigate("/");
       }
     }
-  }, [loggedOut]);
+  }, [loggedOut, navigate, removeCurrentUser]);
 
   const onLoginOutAction = () => loginOutAction();
 

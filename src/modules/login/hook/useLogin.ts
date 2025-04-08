@@ -33,7 +33,7 @@ export const useLogin = () => {
     if (currentUser) {
       navigate("/profile");
     }
-  }, [currentUser]);
+  }, [currentUser, navigate]);
 
   useEffect(() => {
     if (errorLogin) {
@@ -42,7 +42,7 @@ export const useLogin = () => {
       >;
       form.setError(name, opts);
     }
-  }, [errorLogin]);
+  }, [errorLogin, form]);
 
   return {
     form,

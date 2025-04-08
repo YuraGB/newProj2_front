@@ -21,6 +21,21 @@ export type TOrderData = {
 };
 
 export type TOrderStore = {
-  order: (TOrderData & { id: number }) | {};
+  order: (TOrderData & { id: number }) | "";
   setOrderData: (orderData: TOrderData) => void;
+};
+
+export type TOrder = {
+  address: TAddressFormValues["address"];
+  city: TAddressFormValues["city"];
+  createdAt: string;
+  email: string;
+  id: number;
+  lastname: string;
+  paymentType: TPaymentMethod;
+  products: z.infer<typeof TProductOrder>[];
+  state: TAddressFormValues["state"];
+  userId: number;
+  username: string;
+  zip: TAddressFormValues["zip"];
 };

@@ -6,12 +6,7 @@ interface CustomImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   cacheOnLoad?: boolean;
 }
 
-const CustomImage: React.FC<CustomImageProps> = ({
-  src,
-  alt,
-  cacheOnLoad = true,
-  ...props
-}) => {
+const CustomImage: React.FC<CustomImageProps> = ({ src, alt, ...props }) => {
   const { onErrorHandler, imageSrc, loading, setLoading } = useCustomImage(src);
 
   if (loading) {

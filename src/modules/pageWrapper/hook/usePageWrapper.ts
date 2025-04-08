@@ -19,7 +19,7 @@ export const usePageWrapper = () => {
       setCurrentUser(userData.user);
       setToken(userData.accessToken);
     }
-  }, [userData]);
+  }, [userData, setCurrentUser, setToken]);
 
   useFetchBasket();
 };

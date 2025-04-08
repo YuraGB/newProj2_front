@@ -8,16 +8,16 @@ export const HPSlider = (): ReactNode => {
   const { sliderProducts, sliderProductsDataError, loadingSliderData } =
     useHPSlider();
 
-  if (
-    !sliderProducts?.products ||
-    sliderProductsDataError ||
-    loadingSliderData
-  ) {
+  if (loadingSliderData) {
+    return <article className={"p-1 relative min-h-[367px]"} />;
+  }
+
+  if (!sliderProducts?.products || sliderProductsDataError) {
     return null;
   }
 
   return (
-    <article className={"p-1 relative"}>
+    <article className={"p-1 relative w-full"}>
       <Slider>
         {sliderProducts.products.map((product) => (
           <SwiperSlide key={product.id}>

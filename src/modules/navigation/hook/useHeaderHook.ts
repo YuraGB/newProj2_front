@@ -1,7 +1,15 @@
 import useUserStore from "@/stores/userStore.ts";
+import { useCallback, useRef } from "react";
 
 export const useHeaderHook = () => {
   const currentUser = useUserStore((state) => state.currentUser);
+  const closeMenuRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleClose = useCallback(() => {
+    setTimeout(() => {
+      closeMenuRef.current?.click();
+    }, 100);
+  }, [closeMenuRef]);
 
   const notLoggedInNav = [
     {
@@ -34,5 +42,9 @@ export const useHeaderHook = () => {
     },
   ];
 
-  return { nav: currentUser ? loggedInNav : notLoggedInNav };
+  return {
+    nav: currentUser ? loggedInNav : notLoggedInNav,
+    closeMenuRef,
+    handleClose,
+  };
 };

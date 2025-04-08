@@ -186,7 +186,6 @@ const FormRootError = React.forwardRef<
 FormRootError.displayName = "FormRootError";
 
 export {
-  useFormField,
   Form,
   FormItem,
   FormLabel,

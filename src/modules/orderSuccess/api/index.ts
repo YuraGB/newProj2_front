@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import apiCalls from "@/lib/axiosBase.ts";
-import { TOrderData } from "@/types/order";
+import { TOrder } from "@/types/order";
 
 export const useOrderSuccessApi = (orderId: number | undefined) => {
   const {
@@ -10,7 +10,7 @@ export const useOrderSuccessApi = (orderId: number | undefined) => {
   } = useQuery({
     queryKey: ["orderSuccess", orderId],
     queryFn: async () => {
-      const { data } = await apiCalls.get<TOrderData>(`success/${orderId}`);
+      const { data } = await apiCalls.get<TOrder>(`success/${orderId}`);
       console.log(data);
       return data;
     },

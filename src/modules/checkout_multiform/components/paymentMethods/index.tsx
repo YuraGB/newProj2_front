@@ -31,7 +31,7 @@ function PaymentMethods(): ReactNode {
           name="type"
           render={({ field }) => (
             <FormItem className="space-y-3">
-              <FormLabel>Choose payment method:</FormLabel>
+              <FormLabel className={"block"}>Choose payment method:</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}

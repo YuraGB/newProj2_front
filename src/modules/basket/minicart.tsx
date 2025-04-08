@@ -21,7 +21,7 @@ const MiniCart = (): ReactNode => {
   return (
     <Popover>
       <PopoverTrigger asChild={true}>
-        <Button variant="outline">
+        <Button variant="outline" className={"cursor-pointer"}>
           <ShoppingBasket />
           <Badge variant={"destructive"}>{basketCounter ?? 0}</Badge>
         </Button>

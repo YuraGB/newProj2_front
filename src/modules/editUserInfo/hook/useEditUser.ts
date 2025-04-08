@@ -40,7 +40,7 @@ export const useEditUser = () => {
     if (editedUser) {
       setCurrentUser(editedUser);
     }
-  }, [editedUser]);
+  }, [editedUser, setCurrentUser]);
 
   return {
     editUserAction,

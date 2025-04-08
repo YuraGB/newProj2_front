@@ -28,7 +28,7 @@ export const useFetchBasket = () => {
     if (basketData?.basket?.length) {
       mergeBasket(basketData.basket);
     }
-  }, [basketData]);
+  }, [basketData, mergeBasket]);
 
   return {
     basketData,

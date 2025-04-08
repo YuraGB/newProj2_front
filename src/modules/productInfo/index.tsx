@@ -11,7 +11,7 @@ export const ProductInfo: FC<{ product: TProduct }> = ({
     <section className={"grid-cols-1 md:grid-cols-2 grid"}>
       <ProductImage src={product.images[0]} alt={product.title} />
       <ProductDescription product={product}>
-        <AddToCardButton product={product} />
+        <AddToCardButton product={product} additionalClasses={"w-full"} />
       </ProductDescription>
     </section>
   );

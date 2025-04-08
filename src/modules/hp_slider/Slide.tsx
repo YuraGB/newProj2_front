@@ -16,7 +16,7 @@ export const Slide: FC<{ product: THPProductsSlider }> = ({
     >
       <CustomImage
         title={title}
-        loading={"eager"}
+        loading={"lazy"}
         className={"m-auto"}
         width={255}
         height={255}
