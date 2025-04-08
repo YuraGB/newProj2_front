@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "@/lib/axiosBase.ts";
-import { TUser } from "@/types";
+import { TUser } from "@/types/auth";
 
 export const useProfileApi = (isEnabled: boolean = true) => {
   const {

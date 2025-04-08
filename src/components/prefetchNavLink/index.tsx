@@ -5,6 +5,7 @@ const PrefetchNavLink = ({
   to,
   children,
   loadComponent,
+  additionalClasses,
   viewTransition = false,
   onClickAction,
 }: {
@@ -12,6 +13,7 @@ const PrefetchNavLink = ({
   children: ReactNode | string;
   loadComponent: () => Promise<unknown>;
   onClickAction?: (e: SyntheticEvent) => void;
+  additionalClasses?: string;
   viewTransition?: boolean;
 }): ReactNode => {
   const [prefetched, setPrefetched] = useState(false);
@@ -38,7 +40,11 @@ const PrefetchNavLink = ({
       viewTransition={viewTransition}
       onClick={clickHandler}
       className={({ isActive, isPending }) =>
-        isPending ? "pending" : isActive ? "active" : ""
+        isPending
+          ? "pending"
+          : isActive
+            ? `active bg-accent px-1 bg-transparent ${additionalClasses}`
+            : `px-1 bg-accent-base hover:bg-transparent ${additionalClasses}`
       }
     >
       {children}

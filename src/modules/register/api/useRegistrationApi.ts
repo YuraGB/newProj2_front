@@ -1,13 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import { TNewUser, TResponseAuth } from "@/types";
+import { TNewUser, TResponseAuth } from "@/types/auth";
 import apiCall from "@/lib/axiosBase.ts";
 import { toast } from "sonner";
 import useUserStore from "@/stores/userStore.ts";
 import useAccessTokenStore from "@/stores/accessTokenStore.ts";
 
 export const useRegistrationApi = () => {
-  const { setCurrentUser } = useUserStore();
-  const { setToken } = useAccessTokenStore();
+  const setCurrentUser = useUserStore((state) => state.setCurrentUser);
+  const setToken = useAccessTokenStore((state) => state.setToken);
 
   const {
     mutate: createNewUser,

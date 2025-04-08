@@ -16,6 +16,6 @@ export const useAnimatedNavigation = () => {
 
   return {
     linkOnClickHandler,
-    viewTransition: true, // property fo <Link... on <NavLink...
+    viewTransition: true, // property for <Link... or <NavLink...
   };
 };

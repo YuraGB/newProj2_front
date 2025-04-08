@@ -24,7 +24,11 @@ export const RegisterForm = (): ReactNode => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Name" {...field} />
+                <Input
+                  placeholder="Name"
+                  {...field}
+                  autoComplete={"username"}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -37,7 +41,7 @@ export const RegisterForm = (): ReactNode => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="E-mail" {...field} />
+                <Input placeholder="E-mail" {...field} autoComplete={"email"} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -50,7 +54,12 @@ export const RegisterForm = (): ReactNode => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Password" {...field} />
+                <Input
+                  placeholder="Password"
+                  type={"password"}
+                  {...field}
+                  autoComplete={"new-password"}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -1,3 +1,4 @@
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FieldsError<T extends Record<string, any>> = [
   keyof T,
   { message: string; type?: string },
@@ -29,6 +30,7 @@ export const updateErrorPatterns = (newPatterns: Record<string, string>) => {
   errorPatterns = { ...errorPatterns, ...newPatterns };
 };
 
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const formatErrorMessage = (error: unknown): FieldsError<any> => {
   const message = getErrorMessage(error);
 
@@ -38,6 +40,7 @@ export const formatErrorMessage = (error: unknown): FieldsError<any> => {
 
   if (matchedField) {
     const [field] = matchedField;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return [field as keyof any, { message }];
   }
 

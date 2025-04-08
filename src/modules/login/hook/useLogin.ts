@@ -17,7 +17,7 @@ const defaultValues = {
 
 export const useLogin = () => {
   const { loginHandler, errorLogin, isLoading } = useLoginApi();
-  const { currentUser } = useUserStore();
+  const currentUser = useUserStore((state) => state.currentUser);
   const navigate = useNavigate();
 
   const form = useForm<TLoginFormValues>({
@@ -33,7 +33,7 @@ export const useLogin = () => {
     if (currentUser) {
       navigate("/profile");
     }
-  }, [currentUser]);
+  }, [currentUser, navigate]);
 
   useEffect(() => {
     if (errorLogin) {
@@ -42,7 +42,7 @@ export const useLogin = () => {
       >;
       form.setError(name, opts);
     }
-  }, [errorLogin]);
+  }, [errorLogin, form]);
 
   return {
     form,

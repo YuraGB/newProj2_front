@@ -18,13 +18,13 @@ export const useProfile = () => {
       });
       navigate("/");
     }
-  }, [errorProfileData, currentUser]);
+  }, [errorProfileData, currentUser, navigate]);
 
   useEffect(() => {
     if (profileData?.id) {
       setCurrentUser(profileData);
     }
-  }, [profileData]);
+  }, [profileData, setCurrentUser]);
 
   return {
     currentUser,

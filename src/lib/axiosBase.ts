@@ -1,7 +1,13 @@
 import axios, { AxiosRequestConfig } from "axios";
 import useAccessTokenStore from "@/stores/accessTokenStore.ts";
+import { useBasketStore } from "@/stores/basketStore";
+import useUserStore from "@/stores/userStore.ts";
+import { useCheckoutMultiStep } from "@/stores/checkoutMultiStepStore.ts";
+
 interface RetryQueueItem {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolve: (value?: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reject: (error?: any) => void;
   config: AxiosRequestConfig;
 }
@@ -37,6 +43,8 @@ instance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest: AxiosRequestConfig = error.config;
+
+    // if access token is expired but refresh token is still valid
     if (
       error.response &&
       error.response.status === 401 &&
@@ -61,12 +69,16 @@ instance.interceptors.response.use(
 
           // Clear the queue
           refreshAndRetryQueue.length = 0;
-          console.log(originalRequest);
+
           // Retry the original request
           return instance(originalRequest);
         } catch (refreshError) {
+          // clear basket from local storage
+          useBasketStore.getState().clearBasket();
+          //remove user from store
+          useUserStore.getState().removeCurrentUser();
+
           // Handle token refresh error
-          // You can clear all storage and redirect the user to the login page
           throw refreshError;
         } finally {
           isRefreshing = false;
@@ -77,6 +89,16 @@ instance.interceptors.response.use(
       return new Promise<void>((resolve, reject) => {
         refreshAndRetryQueue.push({ config: originalRequest, resolve, reject });
       });
+    }
+
+    // if access token is expired and refresh token is also expired
+    if (error.response?.status === 401 && !error.response.data?.canRefresh) {
+      // clear basket from local storage
+      useBasketStore.getState().clearBasket();
+      //remove user from store
+      useUserStore.getState().removeCurrentUser();
+      // clear checkout data
+      useCheckoutMultiStep.getState().clearCheckout();
     }
 
     // Return a Promise rejection if the status code is not 401

@@ -1,9 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import apiCall from "@/lib/axiosBase.ts";
 import useAccessTokenStore from "@/stores/accessTokenStore.ts";
+import { useBasketStore } from "@/stores/basketStore.ts";
 
 export const useLogoutApi = () => {
-  const { clearToken } = useAccessTokenStore();
+  const clearToken = useAccessTokenStore((state) => state.clearToken);
+  const clearBasket = useBasketStore((state) => state.clearBasket);
   const {
     mutate: loginOutAction,
     data: loggedOut,
@@ -14,7 +16,10 @@ export const useLogoutApi = () => {
       const response = await apiCall.post<{ message: string }>("/logout");
       return response.data;
     },
-    onSuccess: () => clearToken(),
+    onSuccess: () => {
+      clearToken();
+      clearBasket();
+    },
   });
 
   return {

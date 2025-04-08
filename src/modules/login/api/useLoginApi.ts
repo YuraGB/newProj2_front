@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import { TLoginFormValues } from "@/modules/login/validation.ts";
 import apiCall from "@/lib/axiosBase.ts";
-import { TResponseAuth } from "@/types";
+import { TResponseAuth } from "@/types/auth";
 import { toast } from "sonner";
 import useUserStore from "@/stores/userStore.ts";
 import useAccessTokenStore from "@/stores/accessTokenStore.ts";
 
 export const useLoginApi = () => {
-  const { setCurrentUser } = useUserStore();
-  const { setToken } = useAccessTokenStore();
+  const setCurrentUser = useUserStore((state) => state.setCurrentUser);
+  const setToken = useAccessTokenStore((state) => state.setToken);
   const {
     mutate: loginHandler,
     error: errorLogin,

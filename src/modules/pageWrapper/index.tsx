@@ -1,7 +1,9 @@
-import { ReactNode } from "react";
+import { lazy, ReactNode } from "react";
 import { Outlet } from "react-router";
-import { usePageWrapper } from "@/components/pageWrapper/hook/usePageWrapper.ts";
+import { usePageWrapper } from "@/modules/pageWrapper/hook/usePageWrapper.ts";
 import { Header } from "@/components/header";
+
+const Footer = lazy(() => import("@/components/footer"));
 
 type TPageWrapper = {
   mainClasses?: string;
@@ -10,11 +12,12 @@ type TPageWrapper = {
 export const PageWrapper = ({ mainClasses }: TPageWrapper): ReactNode => {
   usePageWrapper();
   return (
-    <div className="container mx-auto p-4">
+    <>
       <Header />
-      <main className={mainClasses}>
+      <main className={`${mainClasses} container mx-auto p-4 h-full`}>
         <Outlet />
       </main>
-    </div>
+      <Footer />
+    </>
   );
 };

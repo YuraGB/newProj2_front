@@ -29,10 +29,10 @@ export const useRegister = () => {
     useRegistrationApi();
 
   useEffect(() => {
-    if (newUserCreated?.id) {
+    if (newUserCreated?.user?.id) {
       navigate("/profile");
     }
-  }, [newUserCreated]);
+  }, [newUserCreated, navigate]);
 
   useEffect(() => {
     if (errorCreateNewUser) {
@@ -41,7 +41,7 @@ export const useRegister = () => {
       ) as FieldsError<typeof defaultValues>;
       form.setError(name, opts);
     }
-  }, [errorCreateNewUser]);
+  }, [errorCreateNewUser, form]);
 
   function onSubmit(values: TRegisterFormValues) {
     createNewUser(values);
