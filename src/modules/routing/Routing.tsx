@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import { PageWrapper } from "../pageWrapper";
 import { lazy, Suspense } from "react";
 import { AuthPageWrapper } from "@/components/authPageWrapper/AuthPageWrapper.tsx";
+import { SkeletonPage } from "@/pages/SkeletonPage.tsx";
 
 const HomePage = lazy(() => import("@/pages/HomePage"));
 const LoginPage = lazy(() => import("@/pages/Login"));
@@ -14,7 +15,7 @@ const Category = lazy(() => import("@/pages/Category"));
 
 function Routing() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<SkeletonPage />}>
       <Routes>
         <Route element={<PageWrapper />}>
           <Route index path="/" element={<HomePage />} />
