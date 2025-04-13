@@ -11,7 +11,6 @@ export const useOrderSuccessApi = (orderId: number | undefined) => {
     queryKey: ["orderSuccess", orderId],
     queryFn: async () => {
       const { data } = await apiCalls.get<TOrder>(`success/${orderId}`);
-      console.log(data);
       return data;
     },
     enabled: !!orderId,

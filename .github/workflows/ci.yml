@@ -11,8 +11,8 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     strategy:
-    matrix:
-      node-version: [24.x]
+      matrix:
+        node-version: [24.x]
 
     steps:
       - name: Checkout repo

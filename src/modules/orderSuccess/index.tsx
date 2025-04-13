@@ -36,7 +36,7 @@ export const OrderSuccess = (): ReactNode => {
       </article>
       <article className={"p-1 relative w-full"}>
         <h3 className={"font-bold"}>Products: </h3>
-        <Slider>
+        <Slider sliderOptions={{}}>
           {products.map((product) => (
             <SwiperSlide key={product.id}>
               <Slide product={product} />

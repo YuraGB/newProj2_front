@@ -1,24 +1,23 @@
 import { useLogoutApi } from "@/modules/logout/api/useLogoutApi.ts";
-import { useEffect } from "react";
 import useUserStore from "@/stores/userStore.ts";
 import { useNavigate } from "react-router";
+import { useBasketStore } from "@/stores/basketStore.ts";
+import useAccessTokenStore from "@/stores/accessTokenStore.ts";
 
 export const useLogout = () => {
-  const { loggedOut, errorLoggedOut, isLoading, loginOutAction } =
-    useLogoutApi();
+  const { errorLoggedOut, isLoading, loginOutAction } = useLogoutApi();
   const removeCurrentUser = useUserStore((state) => state.removeCurrentUser);
+  const clearBasket = useBasketStore((state) => state.clearBasket);
+  const clearToken = useAccessTokenStore((state) => state.clearToken);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (loggedOut && "message" in loggedOut) {
-      if (loggedOut.message === "Logged out successfully") {
-        removeCurrentUser();
-        navigate("/");
-      }
-    }
-  }, [loggedOut, navigate, removeCurrentUser]);
-
-  const onLoginOutAction = () => loginOutAction();
+  const onLoginOutAction = () => {
+    navigate("/");
+    removeCurrentUser();
+    clearBasket();
+    clearToken();
+    loginOutAction();
+  };
 
   return {
     errorLoggedOut,

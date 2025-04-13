@@ -43,8 +43,8 @@ const PrefetchNavLink = ({
         isPending
           ? "pending"
           : isActive
-            ? `active bg-accent px-1 bg-transparent ${additionalClasses}`
-            : `px-1 bg-accent-base hover:bg-transparent ${additionalClasses}`
+            ? `active bg-accent px-1 bg-transparent ${additionalClasses} cursor-pointer`
+            : `px-1 bg-accent-base hover:bg-transparent ${additionalClasses} cursor-pointer`
       }
     >
       {children}

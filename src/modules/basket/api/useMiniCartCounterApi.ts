@@ -28,7 +28,11 @@ export const useMiniCartCounterApi = () => {
   });
 
   useEffect(() => {
-    if (basketCounter && basketCounter?.basket.length !== 0) {
+    if (
+      basketCounter &&
+      basketCounter?.basket.length !== 0 &&
+      currentUser?.id
+    ) {
       // if products were added  before login
       // update users basket on the server
       if (localBasket?.length > 0) {
@@ -37,7 +41,13 @@ export const useMiniCartCounterApi = () => {
 
       mergeLocalBasket(basketCounter.basket);
     }
-  }, [basketCounter, localBasket, mergeLocalBasket, mergeShoppingCart]);
+  }, [
+    basketCounter,
+    localBasket,
+    mergeLocalBasket,
+    mergeShoppingCart,
+    currentUser,
+  ]);
 
   return {
     basketCounter,

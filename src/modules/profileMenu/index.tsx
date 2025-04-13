@@ -10,6 +10,7 @@ import { Logout } from "@/modules/logout";
 import useUserStore from "@/stores/userStore.ts";
 import { EditUserInfo } from "@/modules/editUserInfo";
 import defaultStyles from "@/modules/profileMenu/avatar.module.css";
+import PrefetchNavLink from "@/components/prefetchNavLink";
 
 export const ProfileMenu = (): ReactNode => {
   const currentUser = useUserStore((state) => state.currentUser);
@@ -24,9 +25,18 @@ export const ProfileMenu = (): ReactNode => {
           <CircleUserRound size={32} className={`text-gray-800`} />
         </Avatar>
       </HoverCardTrigger>
-      <HoverCardContent className={"w-auto flex gap-2"}>
-        <Logout />
-        <EditUserInfo />
+      <HoverCardContent className={"w-auto flex flex-col gap-2"}>
+        <PrefetchNavLink
+          to={"/profile"}
+          additionalClasses={"bg-transparent cursor-pointer hover:underline"}
+          loadComponent={() => import("@/pages/Profile")}
+        >
+          <span className={"text-gray-800 block relative"}> Profile page</span>
+        </PrefetchNavLink>
+        <div className={"flex gap-2"}>
+          <Logout />
+          <EditUserInfo />
+        </div>
       </HoverCardContent>
     </HoverCard>
   );

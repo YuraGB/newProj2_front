@@ -35,11 +35,6 @@ export const useHeaderHook = () => {
       navTitle: "Home",
       component: () => import(`@/pages/HomePage`),
     },
-    {
-      navKey: "/Profile",
-      navTitle: "Profile",
-      component: () => import(`@/pages/Profile`),
-    },
   ];
 
   return {
