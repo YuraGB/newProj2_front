@@ -27,11 +27,9 @@ export const router = createBrowserRouter(
       <Route path="/success/:orderId" element={<OrderSuccessPage />} />
       <Route path="/category/:categoryName" element={<Category />} />
 
-      <Route element={<PageWrapper mainClasses={"navigation_animation"} />}>
-        <Route element={<AuthPageWrapper />}>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="registration" element={<RegisterPage />} />
-        </Route>
+      <Route element={<AuthPageWrapper />}>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="registration" element={<RegisterPage />} />
       </Route>
     </Route>,
   ),
